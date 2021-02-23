@@ -10,7 +10,7 @@ FPS = 60
 SCREENWIDTH = 288
 SCREENHEIGHT = 512
 # Зазор между трубами
-PIPE_GAP_SIZE = 200
+PIPE_GAP_SIZE = 100
 # образ
 BIRD_IMAGE_PATHS = {
     'red': {
