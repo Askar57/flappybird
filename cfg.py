@@ -14,27 +14,27 @@ PIPE_GAP_SIZE = 200
 # образ
 BIRD_IMAGE_PATHS = {
     'red': {
-     'up': os.path.join(os.getcwd(), 'resources/images/redbird-upflap.png'),
-     'mid': os.path.join(os.getcwd(), 'resources/images/redbird-midflap.png'),
-     'down': os.path.join(os.getcwd(), 'resources/images/redbird-downflap.png')
+     'up': os.path.join(os.getcwd(), 'images/redbird-upflap.png'),
+     'mid': os.path.join(os.getcwd(), 'images/redbird-midflap.png'),
+     'down': os.path.join(os.getcwd(), 'images/redbird-downflap.png')
     }
 }
 BACKGROUND_IMAGE_PATHS = {
-    'day': os.path.join(os.getcwd(), 'resources/images/background-day.png'),
-    'night': os.path.join(os.getcwd(), 'resources/images/background-night.png')
+    'day': os.path.join(os.getcwd(), 'images/background-day.png'),
+    'night': os.path.join(os.getcwd(), 'images/background-night.png')
 }
 PIPE_IMAGE_PATHS = {
-    'green': os.path.join(os.getcwd(), 'resources/images/pipe-green.png'),
+    'green': os.path.join(os.getcwd(), 'images/pipe-green.png'),
 }
 OTHER_IMAGE_PATHS = {
-    'message': os.path.join(os.getcwd(), 'resources/images/message.png'),
-    'base': os.path.join(os.getcwd(), 'resources/images/base.png')
+    'message': os.path.join(os.getcwd(), 'images/message.png'),
+    'base': os.path.join(os.getcwd(), 'images/base.png')
 }
 # Аудио тракт
 AUDIO_PATHS = {
-    'die': os.path.join(os.getcwd(), 'resources/audios/die.mp3'),
-    'hit': os.path.join(os.getcwd(), 'resources/audios/hit.mp3'),
-    'point': os.path.join(os.getcwd(), 'resources/audios/point.mp3'),
-    'swoosh': os.path.join(os.getcwd(), 'resources/audios/swoosh.mp3'),
-    'wing': os.path.join(os.getcwd(), 'resources/audios/wing.mp3')
+    'die': os.path.join(os.getcwd(), 'sounds/die.mp3'),
+    'hit': os.path.join(os.getcwd(), 'sounds/hit.mp3'),
+    'point': os.path.join(os.getcwd(), 'sounds/point.mp3'),
+    'swoosh': os.path.join(os.getcwd(), 'sounds/swoosh.mp3'),
+    'wing': os.path.join(os.getcwd(), 'sounds/wing.mp3')
 }
