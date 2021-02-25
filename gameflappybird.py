@@ -15,12 +15,31 @@ def initGame():
     return screen
 
 
+'''Показать текущий счет'''
+
+
+def showScore(screen, score, number_images):
+    digits = list(str(int(score)))
+    width = 0
+    for d in digits:
+        width += number_images.get(d).get_width()
+    offset = (cfg.SCREENWIDTH - width) / 2
+    for d in digits:
+        screen.blit(number_images.get(d), (offset, cfg.SCREENHEIGHT * 0.1))
+        offset += number_images.get(d).get_width()
+
+
 '''Основная функция'''
 
 
 def main():
     screen = initGame()
+    game_font = pygame.font.Font('04B_19.ttf', 20)
     # Загрузим необходимые игровые ресурсы
+    # Импорт цифровых изображений
+    number_images = dict()
+    for key, value in cfg.NUMBER_IMAGE_PATHS.items():
+        number_images[key] = pygame.image.load(value).convert_alpha()
     # Импорт аудио
     sounds = dict()
     for key, sound in cfg.AUDIO_PATHS.items():
@@ -59,6 +78,7 @@ def main():
     game_start = startGame(screen, sounds, bird_images,
                            other_images, bg_image, cfg)
     # Войти в основную игру
+    score = 0
     bird_pos, base_pos, bird_idd = list(game_start.values())
     base_bg_width = other_images['base'].get_width() - bg_image.get_width()
     clock = pygame.time.Clock()
@@ -98,6 +118,9 @@ def main():
             pipe.rect.left -= 4
             if pipe.rect.centerx < bird.rect.centerx and not pipe.used_for_score:
                 pipe.used_for_score = True
+                score += 0.5
+                if '.5' in str(score):
+                    sounds['point'].play()
             if 5 > pipe.rect.left > 0 and add_pipe:
                 pipe_pos = Pipe.randomPipe(cfg, pipe_images.get('top'))
                 pipe_sprites.add(Pipe(image=pipe_images.get('top'),
@@ -113,10 +136,20 @@ def main():
         # Привязать необходимые элементы на экране
         screen.blit(bg_image, (0, 0))
         pipe_sprites.draw(screen)
+        showScore(screen, score, number_images)
         screen.blit(other_images['base'], base_pos)
         bird.draw(screen)
         pygame.display.update()
         clock.tick(cfg.FPS)
+    endGame(screen, sounds, showScore, score, number_images,
+            bird, pipe_sprites, bg_image, other_images,
+            base_pos, cfg)
+
+
+def update_score(score, high_score):
+    if score > high_score:
+        high_score = score
+    return high_score
 
 
 '''Начальный экран'''
@@ -158,6 +191,32 @@ def startGame(screen, sounds, bird_images, other_images, bg_image, cfg):
         screen.blit(list(bird_images.values())[bird_id], bird_pos)
         screen.blit(other_images['message'], msg_pos)
         screen.blit(other_images['base'], base_pos)
+        pygame.display.update()
+        clock.tick(cfg.FPS)
+
+
+'''Интерфейс конца игры'''
+
+
+def endGame(screen, showScore, score, number_images,
+            bird, pipe_sprites, bg_image, other_images,
+            base_pos, cfg):
+    clock = pygame.time.Clock()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+                    return
+        boundary_values = [0, base_pos[-1]]
+        bird.update(boundary_values, float(clock.tick(cfg.FPS)) / 1000.)
+        screen.blit(bg_image, (0, 0))
+        pipe_sprites.draw(screen)
+        screen.blit(other_images['base'], base_pos)
+        showScore(screen, score, number_images)
+        bird.draw(screen)
         pygame.display.update()
         clock.tick(cfg.FPS)
 
