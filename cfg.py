@@ -4,9 +4,9 @@
 import os
 
 
-# FPS
-FPS = 60
-# экран
+# FPS(скорость)
+FPS = 70
+# размер экрана
 SCREENWIDTH = 288
 SCREENHEIGHT = 512
 # Зазор между трубами
@@ -57,7 +57,7 @@ OTHER_IMAGE_PATHS = {
     'gameover': os.path.join(os.getcwd(), 'images/gameover.png'),
 
 }
-# Аудио тракт
+# Аудио эффекты
 AUDIO_PATHS = {
     'die': os.path.join(os.getcwd(), 'sounds/die.mp3'),
     'hit': os.path.join(os.getcwd(), 'sounds/hit.mp3'),

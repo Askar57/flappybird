@@ -34,7 +34,6 @@ def showScore(screen, score, number_images):
 
 def main():
     screen = initGame()
-    game_font = pygame.font.Font('04B_19.ttf', 20)
     # Загрузим необходимые игровые ресурсы
     # Импорт цифровых изображений
     number_images = dict()
@@ -141,7 +140,7 @@ def main():
         bird.draw(screen)
         pygame.display.update()
         clock.tick(cfg.FPS)
-    endGame(screen, sounds, showScore, score, number_images,
+    endGame(screen, showScore, score, number_images,
             bird, pipe_sprites, bg_image, other_images,
             base_pos, cfg)
 
@@ -254,8 +253,8 @@ class Bird(pygame.sprite.Sprite):
         self.rect.left, self.rect.top = pos
         # Переменные, необходимые для вертикального перемещения
         self.is_flapped = False
-        self.min_speed = 0
-        self.max_speed = 9
+        self.min_height = 0
+        self.max_height = 10
         # Сменить форму птицы
         self.bird_id = id
         self.bird_id_cycle = itertools.cycle([0, 1, 2, 1])
@@ -266,27 +265,27 @@ class Bird(pygame.sprite.Sprite):
     def update(self, boundary_values, pass_time):
         # Обновление положения по вертикали
         if self.is_flapped:
-            self.max_speed -= 60 * pass_time
-            self.rect.top -= self.max_speed
-            if self.max_speed <= 0:
+            self.max_height -= 60 * pass_time
+            self.rect.top -= self.max_height
+            if self.max_height <= 0:
                 self.unsetFlapped()
-                self.max_speed = 9
-                self.min_speed = 0
+                self.min_height = 0
+                self.max_height = 10
         else:
-            self.min_speed += 40 * pass_time
-            self.rect.bottom += self.min_speed
+            self.min_height += 40 * pass_time
+            self.rect.bottom += self.min_height
         # Определить, разбилась ли птица из-за того,
         # что она попала в верхнюю и нижнюю границы
         is_dead = False
         if self.rect.bottom > boundary_values[1]:
             is_dead = True
-            self.max_speed = 0
-            self.min_speed = 0
+            self.max_height = 0
+            self.min_height = 0
             self.rect.bottom = boundary_values[1]
         if self.rect.top < boundary_values[0]:
             is_dead = True
-            self.max_speed = 0
-            self.min_speed = 0
+            self.max_height = 0
+            self.min_height = 0
             self.rect.top = boundary_values[0]
         # Включите симуляцию формы птицы, чтобы имитировать эффект крыльев вентилятора
         self.bird_id_count += 1
@@ -300,7 +299,7 @@ class Bird(pygame.sprite.Sprite):
 
     def setFlapped(self):
         if self.is_flapped:
-            self.max_speed = max(12, self.max_speed + 1)
+            self.max_height = max(12, self.max_height + 1)
         else:
             self.is_flapped = True
 
